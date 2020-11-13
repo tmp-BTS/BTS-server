@@ -1,7 +1,6 @@
 package com.tmp.BTS.store.model
 
-import com.fasterxml.jackson.annotation.JsonManagedReference
-import java.time.LocalTime
+import java.time.LocalDateTime
 import javax.persistence.*
 
 @Entity
@@ -16,9 +15,15 @@ data class Store (
         @Column
         val location : String
 ) : BaseEntity() {
-    fun newStore(uuid : String, title : String, location: String) {
-        val store = store(uuid, )
+    fun newStore(uuid : String, title : String, location: String): Store {
+        val store = Store(uuid, title, location)
         return store
+    }
+
+    fun addHistory(temperature:String, time:LocalDateTime) : History {
+        val history = History(this, temperature, time)
+
+        return history
     }
 }
 

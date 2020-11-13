@@ -1,4 +1,4 @@
-package com.tmp.BTS
+package com.tmp.BTS.store.model
 
 import com.fasterxml.jackson.annotation.JsonFormat
 
@@ -6,7 +6,7 @@ import javax.persistence.*
 import java.time.LocalDateTime
 
 @MappedSuperclass
-class BaseEntity {
+open class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     open val id: Long? = null

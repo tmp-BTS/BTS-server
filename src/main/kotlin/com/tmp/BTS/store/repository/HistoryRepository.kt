@@ -1,13 +1,13 @@
 package com.tmp.BTS.store.repository
 
+import com.tmp.BTS.store.model.History
 import com.tmp.BTS.store.model.Store
 import org.springframework.data.repository.CrudRepository
 import org.springframework.transaction.annotation.Transactional
 
-interface StoreRepository : CrudRepository<Store, Long> {
-
-    fun getById(id: String) : Store
-
+interface HistoryRepository : CrudRepository<History, Long> {
     @Transactional
-    fun deleteStoreById(id : Long)
+    fun deleteByTime(time:String)
+
+    fun findByStore(store: Store) : History?
 }
