@@ -1,8 +1,10 @@
 package com.tmp.BTS.store.service
 
 import com.tmp.BTS.store.dto.HistoryDto
+import com.tmp.BTS.store.dto.HistoryListDto
 import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.repository.HistoryRepository
+import com.tmp.BTS.store.repository.HistoryRepositorySupport
 import com.tmp.BTS.store.repository.StoreRepository
 import com.tmp.BTS.util.LogEvent
 import net.logstash.logback.argument.StructuredArguments.kv
@@ -23,6 +25,9 @@ class StoreService {
     @Autowired
     lateinit var storeRepository: StoreRepository
 
+    @Autowired
+    lateinit var historyRepositorySupport: HistoryRepositorySupport
+
     @Transactional
     fun addStoreByBeacon(historyDto: HistoryDto):Boolean{
         try{
@@ -38,5 +43,12 @@ class StoreService {
             logger.warn(ex.message, kv("storeId", historyDto.uuid), kv("eventCode", LogEvent.StoreServiceProcess.code))
             return false
         }
+    }
+
+
+    fun fetchHistoryList():List<HistoryListDto> {
+        val histories = historyRepositorySupport.fetchHistoryList()
+
+        return histories
     }
 }
