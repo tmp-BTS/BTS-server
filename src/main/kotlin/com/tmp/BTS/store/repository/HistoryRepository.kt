@@ -10,10 +10,11 @@ import org.springframework.transaction.annotation.Transactional
 import javax.annotation.Resource
 
 interface HistoryRepository : CrudRepository<History, Long> {
-    @Transactional
-    fun deleteByTime(time:String)
 
     fun findByStore(store: Store) : History?
+
+    @Transactional
+    fun deleteHistoryById(id: Long)
 }
 
 @Repository

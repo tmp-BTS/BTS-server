@@ -1,16 +1,16 @@
 package com.tmp.BTS.store.controller
 
-import com.tmp.BTS.exception.ErrorResponse
-import com.tmp.BTS.exception.InternalException
 import com.tmp.BTS.exception.BTSException
+import com.tmp.BTS.exception.ErrorResponse
 import com.tmp.BTS.util.LogEvent
 import net.logstash.logback.argument.StructuredArguments
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MissingServletRequestParameterException
-import org.springframework.web.bind.annotation.*
-import java.lang.Exception
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
 import java.time.LocalDateTime
 import javax.servlet.http.HttpServletRequest
 
@@ -36,7 +36,7 @@ class ErrorController {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(BTSException::class)
-    fun handleMorningbeesException(req: HttpServletRequest, ex: BTSException): ResponseEntity<ErrorResponse> {
+    fun handleBTSException(req: HttpServletRequest, ex: BTSException): ResponseEntity<ErrorResponse> {
         val backTrace = ex.stackTrace[0].toString() + "/" + ex.stackTrace[1].toString()
         log.warn(ex.message, StructuredArguments.kv("eventCode", LogEvent.GlobalException), StructuredArguments.kv("backTrace", backTrace))
         val errorResponse = ErrorResponse(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), ex.code.message, ex.code.status)
