@@ -8,9 +8,6 @@ import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import javax.annotation.Resource
-import com.querydsl.core.types.Projections
-import com.querydsl.jpa.JPQLQuery
-import com.tmp.BTS.store.dto.HistoryListDto
 
 interface HistoryRepository : CrudRepository<History, Long> {
     @Transactional
@@ -24,7 +21,7 @@ class HistoryRepositorySupport(
         @Resource(name = "jpaQueryFactory")
         val query : JPAQueryFactory
 ) : QuerydslRepositorySupport(History::class.java) {
-    fun fetchHistoryList() : List<HistoryListDto>{
+   /* fun fetchHistoryList() : List<HistoryListDto>{
         val qHistory = QHistory.history
         val qStore = QStore.store
 
@@ -35,6 +32,6 @@ class HistoryRepositorySupport(
                 .groupBy(qStore.title, qStore.location, qHistory.temperature, qHistory.time).orderBy(qHistory.time)
 
         return historyList.fetch()
-    }
+    }*/
 
 }

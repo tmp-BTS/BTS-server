@@ -1,6 +1,5 @@
 package com.tmp.BTS.store.service
 
-import com.tmp.BTS.store.dto.HistoryListDto
 import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.repository.HistoryRepository
 import com.tmp.BTS.store.repository.HistoryRepositorySupport
@@ -45,10 +44,10 @@ class StoreService {
         }
     }
 
-
+/*
     fun fetchHistoryList():List<HistoryListDto> {
         val histories = historyRepositorySupport.fetchHistoryList()
 
         return histories
-    }
+    }*/
 }
