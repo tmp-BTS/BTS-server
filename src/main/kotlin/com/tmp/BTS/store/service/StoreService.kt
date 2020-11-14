@@ -1,6 +1,5 @@
 package com.tmp.BTS.store.service
 
-import com.tmp.BTS.store.dto.HistoryDto
 import com.tmp.BTS.store.dto.HistoryListDto
 import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.repository.HistoryRepository
@@ -29,18 +28,19 @@ class StoreService {
     lateinit var historyRepositorySupport: HistoryRepositorySupport
 
     @Transactional
-    fun addStoreByBeacon(historyDto: HistoryDto):Boolean{
+    fun addStoreByBeacon(uuid:String, temperature:String):Boolean{
         try{
             //val user:User = userRepository.getById(historyDto.userId)
-            val store:Store = storeRepository.getById(id = historyDto.uuid)
 
-            val history = store.addHistory(historyDto.temperature, LocalDateTime.now())
+            val store:Store = storeRepository.getById(id = uuid)
+
+            val history = store.addHistory(temperature, LocalDateTime.now())
             historyRepository.save(history)
 
             return true
 
         } catch (ex:Exception) {
-            logger.warn(ex.message, kv("storeId", historyDto.uuid), kv("eventCode", LogEvent.StoreServiceProcess.code))
+            logger.warn(ex.message, kv("storeId", uuid), kv("eventCode", LogEvent.StoreServiceProcess.code))
             return false
         }
     }

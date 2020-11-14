@@ -29,7 +29,7 @@ class HistoryRepositorySupport(
         val qStore = QStore.store
 
         val historyList : JPQLQuery<HistoryListDto> = query.from(qHistory)
-                .innerJoin(qHistory.store, qStore)
+                //.innerJoin(qHistory.store, qStore)
                 .select(Projections.constructor(HistoryListDto::class.java,
                 qStore.title, qStore.location, qHistory.temperature, qHistory.time))
                 .groupBy(qStore.title, qStore.location, qHistory.temperature, qHistory.time).orderBy(qHistory.time)
