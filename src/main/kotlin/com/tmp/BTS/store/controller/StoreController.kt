@@ -2,6 +2,7 @@ package com.tmp.BTS.store.controller
 
 import com.tmp.BTS.exception.BadRequestException
 import com.tmp.BTS.exception.ErrorCode
+import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.service.StoreService
 import com.tmp.BTS.util.LogEvent
 import org.springframework.beans.factory.annotation.Autowired
@@ -52,5 +53,16 @@ class StoreController {
     if(!result) throw BadRequestException("fail add place by user", ErrorCode.NotAddPlace, LogEvent.StoreControllerProcess.code)
 
     return ResponseEntity(HttpStatus.CREATED)
+    }
+
+    @ResponseBody
+    @DeleteMapping("/withdrawal")
+    fun withdrawal(request: HttpServletRequest):ResponseEntity<HashMap<String, Any>> {
+        val store:Store = request.getAttribute("store") as Store
+
+        val result = storeService.withdrawal(store)
+        if(!result) throw BadRequestException("fail withdrawal history", ErrorCode.FailWithdrwalHistory, LogEvent.StoreControllerProcess.code)
+
+        return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 }

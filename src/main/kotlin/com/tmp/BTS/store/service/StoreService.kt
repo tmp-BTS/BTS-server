@@ -1,5 +1,6 @@
 package com.tmp.BTS.store.service
 
+import com.tmp.BTS.store.model.History
 import com.tmp.BTS.store.model.Place
 import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.repository.HistoryRepository
@@ -60,6 +61,23 @@ class StoreService {
             logger.warn(ex.message, kv("title", title), kv("eventCode", LogEvent.StoreServiceProcess.code))
             return false
         }
+    }
+
+    fun withdrawal(store:Store): Boolean {
+        try{
+            val history: History? = historyRepository.findByStore(store)
+
+            if(history == null) throw Exception("history is null")
+
+            if(history.time.plusWeeks(4) == LocalDateTime.now() ) {
+                historyRepository.deleteHistoryById(store.id!!)
+            }
+            return true
+        } catch (ex:Exception) {
+            logger.warn(ex.message, kv("store", store.id), kv("eventCode", LogEvent.StoreServiceProcess.code))
+            return false
+        }
+
     }
 
 /*
