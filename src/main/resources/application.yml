@@ -1,0 +1,88 @@
+spring:
+  profiles:
+    active: development
+
+---
+
+spring:
+  profiles: development
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://0.0.0.0:3307/BTS?useSSL=false
+    username: root
+    password: mysql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: false
+    database: mysql
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    out-of-order: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+  data:
+    redis:
+      repositories:
+        enabled: false
+
+aws:
+  access-key-id: ${AWS_ACCESS_KEY_ID}
+  secret-key: ${AWS_SECRET_ACCESS_KEY}
+  bucket: ${BTS_DEV_S3_BUCKET_NAME}
+
+token:
+  salt: t!h@r!a@g!o@o
+
+---
+
+spring:
+  profiles: production
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    sql-script-encoding: UTF-8
+    url: ${BTS_PRD_DB_URL}
+    username: ${BTS_PRD_DB_USER}
+    password: ${BTS_PRD_DB_PASSWORD}
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    out-of-order: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    generate-ddl: false
+    database: mysql
+    show-sql: false
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+      enabled: true
+  redis:
+    host: ${BTS_PRD_REDIS_HOST}
+    port: ${BTS_PRD_REDIS_PORT}
+    password:
+
+aws:
+  access-key-id: ${AWS_ACCESS_KEY_ID}
+  secret-key: ${AWS_SECRET_ACCESS_KEY}
+  bucket: ${BTS_PRD_S3_BUCKET_NAME}
+
+token:
+  salt: ${BTS_TOKEN_SALT}
+
+server.error:
+  include-exception: false
+  include-stacktrace: never
