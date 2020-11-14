@@ -8,4 +8,5 @@ enum class ErrorCode(val message: String, val status: Int) {
 
     NotAddStore("store 기록에 실패했습니다.", 140),
 
+    NotAddPlace("place 기록에 실패했습니다.", 150),
 }

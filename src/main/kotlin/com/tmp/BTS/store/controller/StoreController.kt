@@ -27,7 +27,7 @@ class StoreController {
         //val history : History = request.getAttribute("history") as History
 
         val result = storeService.addStoreByBeacon(uuid, temperature)
-        if(!result) throw BadRequestException("fail add store", ErrorCode.NotAddStore, LogEvent.StoreControllerProcess.code)
+        if(!result) throw BadRequestException("fail add store by beacon", ErrorCode.NotAddStore, LogEvent.StoreControllerProcess.code)
 
         return ResponseEntity(HttpStatus.CREATED)
     }
@@ -42,4 +42,15 @@ class StoreController {
                 .body(response)
     }
 */
+    @ResponseBody
+    @PostMapping("/place")
+    fun addPlace(@RequestParam(value="title", required = true) title : String,
+                 @RequestParam(value="location", required = true) location : String,
+                 request:HttpServletRequest):ResponseEntity<HashMap<String, Any>> {
+
+    val result = storeService.addPlaceByUser(title, location)
+    if(!result) throw BadRequestException("fail add place by user", ErrorCode.NotAddPlace, LogEvent.StoreControllerProcess.code)
+
+    return ResponseEntity(HttpStatus.CREATED)
+    }
 }

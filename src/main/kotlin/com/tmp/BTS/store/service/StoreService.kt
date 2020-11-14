@@ -1,8 +1,10 @@
 package com.tmp.BTS.store.service
 
+import com.tmp.BTS.store.model.Place
 import com.tmp.BTS.store.model.Store
 import com.tmp.BTS.store.repository.HistoryRepository
 import com.tmp.BTS.store.repository.HistoryRepositorySupport
+import com.tmp.BTS.store.repository.PlaceRepository
 import com.tmp.BTS.store.repository.StoreRepository
 import com.tmp.BTS.util.LogEvent
 import net.logstash.logback.argument.StructuredArguments.kv
@@ -26,6 +28,9 @@ class StoreService {
     @Autowired
     lateinit var historyRepositorySupport: HistoryRepositorySupport
 
+    @Autowired
+    lateinit var placeRepository: PlaceRepository
+
     @Transactional
     fun addStoreByBeacon(uuid:String, temperature:String):Boolean{
         try{
@@ -40,6 +45,19 @@ class StoreService {
 
         } catch (ex:Exception) {
             logger.warn(ex.message, kv("storeId", uuid), kv("eventCode", LogEvent.StoreServiceProcess.code))
+            return false
+        }
+    }
+
+    @Transactional
+    fun addPlaceByUser(title: String, location: String): Boolean {
+        try {
+            val place = Place(title, location, LocalDateTime.now())
+            placeRepository.save(place)
+
+            return true
+        } catch(ex:Exception) {
+            logger.warn(ex.message, kv("title", title), kv("eventCode", LogEvent.StoreServiceProcess.code))
             return false
         }
     }
