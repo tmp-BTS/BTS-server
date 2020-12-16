@@ -1,6 +1,6 @@
+
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
 	id("org.springframework.boot") version "2.3.4.RELEASE"
