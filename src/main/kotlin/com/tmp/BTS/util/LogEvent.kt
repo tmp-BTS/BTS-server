@@ -12,4 +12,7 @@ enum class LogEvent(val code: String) {
     // StoreController Process
     StoreControllerProcess("SCP001"),
 
+    AuthServiceProcessError("ASPE01"),
+
+    TokenServiceProcessError("TSPE01"),
 }

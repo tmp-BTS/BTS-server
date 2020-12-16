@@ -5,3 +5,5 @@ create table history (
         enter_time varchar(100),
         FOREIGN KEY(`store_id`) REFERENCES `store` (`store_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+create table user(
+)

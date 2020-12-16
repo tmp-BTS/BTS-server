@@ -1,5 +1,8 @@
 package com.tmp.BTS.store.service
 
+
+import com.tmp.BTS.store.dto.HistoryDto
+import com.tmp.BTS.store.dto.HistoryListDto
 import com.tmp.BTS.store.model.History
 import com.tmp.BTS.store.model.Place
 import com.tmp.BTS.store.model.Store
@@ -7,6 +10,8 @@ import com.tmp.BTS.store.repository.HistoryRepository
 import com.tmp.BTS.store.repository.HistoryRepositorySupport
 import com.tmp.BTS.store.repository.PlaceRepository
 import com.tmp.BTS.store.repository.StoreRepository
+import com.tmp.BTS.user.UserRepository
+import com.tmp.BTS.user.model.User
 import com.tmp.BTS.util.LogEvent
 import net.logstash.logback.argument.StructuredArguments.kv
 import org.slf4j.LoggerFactory
@@ -32,10 +37,16 @@ class StoreService {
     @Autowired
     lateinit var placeRepository: PlaceRepository
 
+    @Autowired
+    lateinit var historyDto:HistoryDto
+
+    @Autowired
+    lateinit var userRepository : UserRepository
+
     @Transactional
     fun addStoreByBeacon(uuid:String, temperature:String):Boolean{
         try{
-            //val user:User = userRepository.getById(historyDto.userId)
+            val user: User = userRepository.getById(historyDto.user)
 
             val store:Store = storeRepository.getById(id = uuid)
 
@@ -51,9 +62,11 @@ class StoreService {
     }
 
     @Transactional
-    fun addPlaceByUser(title: String, location: String): Boolean {
+    fun addPlaceByUser(user : User, title: String, location: String): Boolean {
         try {
-            val place = Place(title, location, LocalDateTime.now())
+            val user:User = userRepository.getById(user)
+            val place = Place(user, title, location, LocalDateTime.now())
+
             placeRepository.save(place)
 
             return true
@@ -80,10 +93,9 @@ class StoreService {
 
     }
 
-/*
     fun fetchHistoryList():List<HistoryListDto> {
         val histories = historyRepositorySupport.fetchHistoryList()
 
         return histories
-    }*/
+    }
 }
