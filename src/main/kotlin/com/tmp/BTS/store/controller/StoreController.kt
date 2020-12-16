@@ -46,6 +46,7 @@ class StoreController {
                 .body(response)
     }
 
+
     @ResponseBody
     @PostMapping("/place")
     fun addPlace(@RequestParam(value="user", required = true) user : User,
@@ -54,6 +55,7 @@ class StoreController {
                  request:HttpServletRequest):ResponseEntity<HashMap<String, Any>> {
 
     val result = storeService.addPlaceByUser(user, title, location)
+
     if(!result) throw BadRequestException("fail add place by user", ErrorCode.NotAddPlace, LogEvent.StoreControllerProcess.code)
 
     return ResponseEntity(HttpStatus.CREATED)

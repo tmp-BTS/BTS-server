@@ -1,5 +1,6 @@
 package com.tmp.BTS.store.service
 
+
 import com.tmp.BTS.store.dto.HistoryDto
 import com.tmp.BTS.store.dto.HistoryListDto
 import com.tmp.BTS.store.model.History
@@ -65,6 +66,7 @@ class StoreService {
         try {
             val user:User = userRepository.getById(user)
             val place = Place(user, title, location, LocalDateTime.now())
+
             placeRepository.save(place)
 
             return true
@@ -90,7 +92,6 @@ class StoreService {
         }
 
     }
-
 
     fun fetchHistoryList():List<HistoryListDto> {
         val histories = historyRepositorySupport.fetchHistoryList()
